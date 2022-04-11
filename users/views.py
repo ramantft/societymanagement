@@ -46,7 +46,7 @@ def register(request):
                 user = form.cleaned_data.get('email')
                 user_otp = Userotp(email=form.cleaned_data.get('email'),otp=str(otp))
                 user_otp.save()
-                log_user = Userprofile(email=form.cleaned_data.get('email'), username=form.cleaned_data.get('username'), flat_no=form.cleaned_data.get('flat_no'), tower_no=form.cleaned_data.get('tower_no'))
+                log_user = Userprofile(email=form.cleaned_data.get('email'), username=form.cleaned_data.get('username'), flat_no=form.cleaned_data.get('flat_no'), tower_no=form.cleaned_data.get('tower_no'), phone_no=form.cleaned_data.get('phone_no'))
                 log_user.save()
                 up_email = User.objects.get(username=form.cleaned_data.get('username'))
                 up_email.email = form.cleaned_data.get('email')
@@ -63,7 +63,8 @@ def register(request):
     return render(request, 'register.html', {})
 
 def home_page(request):
-    return render(request, 'home_page.html')
+    resident_list = Userprofile.objects.all()
+    return render(request, 'home_page.html', {"resident_list": resident_list})
 
 class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     template_name = 'users/password_reset.html'
@@ -74,3 +75,10 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
                       " If you don't receive an email, " \
                       "please make sure you've entered the address you registered with, and check your spam folder."
     success_url = reverse_lazy('home_page')
+
+def society_guidelines(request):
+    return render(request, 'society_guidelines.html')
+
+def user_profile(request):
+    user = Userprofile.objects.get(email=request.user.email)
+    return render(request, "user_profile.html", {"userprofile": user})

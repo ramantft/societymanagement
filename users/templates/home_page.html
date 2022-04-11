@@ -1,18 +1,277 @@
-{% load static %}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<h1 class='d-flex justify-content-center'>Welcome to Society Management</h1>
-<h2 class='d-flex justify-content-center'>Hello, {{ user.username|default:'Guest' }}!</h2>
-{% block nav %}
-        <ul id="nav">
-            <li>{% block nav-home %}<a href="{% url 'login' %}">Home</a>{% endblock %}</li>
-            <li>{% block nav-about %}<a href="{% url 'logout' %}">About</a>{% endblock %}</li>
-            <li>{% block nav-contact %}<a href="{% url 'register' %}">Contact</a>{% endblock %}</li>
-        </ul>
-        {% endblock %}
-{% if user.is_authenticated %}
-    <a href="{% url 'logout' %}" class='d-flex justify-content-center'>Logout</a>
-{% else %}
-    <a href="{% url 'login' %}" class='d-flex justify-content-center'>Login</a>
-{% endif %}
-{% block content %}
-{% endblock %}
+<!-- start  -->
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="static/users/home.css">
+</head>
+        <body> 
+
+            <!-- header -->
+            <header>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <a class="navbar-brand" href="#">Society Management</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                  
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                      <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'user_profile' %}">User Profile <span class="sr-only">(current)</span></a>
+                          </li>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Add Visitor <span class="sr-only">(current)</span></a>
+                          </li>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Payment <span class="sr-only">(current)</span></a>
+                          </li>
+                        </li>
+                        <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Services
+                          </a>
+                          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Home Service</a>
+                            <a class="dropdown-item" href="#">AC Service</a>
+                            <a class="dropdown-item" href="#">Pest Control</a>
+                            <a class="dropdown-item" href="#">Groceries</a>
+                        </li>
+                        <li class="nav-item active">
+                          <button class="btn btn-outline-success my-2 my-sm-0"><a class="nav-link" href="{% url 'logout' %}">Logout <span class="sr-only">(current)</span></a></button>
+                        </li>
+                        {% else %}
+                        <li class="nav-item active">
+                          <a class="nav-link" href="{% url 'login' %}">Login <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item active">
+                          <a class="nav-link" href="{% url 'register' %}">Sign up <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Society Facilities
+                          </a>
+                          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Pool</a>
+                            <a class="dropdown-item" href="#">Gym</a>
+                            <a class="dropdown-item" href="#">Creche</a>
+                            <a class="dropdown-item" href="#">Sports Complex</a>
+                        </li>
+                        {% endif %}
+                      </ul>
+                      <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                      </form>
+                    </div>
+                  </nav>
+            </header>
+            <!-- for flex for -->
+            <div class="d-flex">
+              <!-- dashboard home page -->
+              <div class="container-fluid dashboard">
+                  <h1>Home</h1>
+                  <h2>Recent News: </h2>
+                  <div class="d-flex justify-content-between news">
+                    <div class="card2" style="min-width: 18rem;">
+                      <div class="card-header">
+                        Metaverse And Ethereum: What’s The Connection?
+                      </div>
+                      <div class="card-body">
+                        <p class="card-text">
+                            <ul class="list-group list-group-flush">
+                                <li class="newscard list-group-item" title="Metaverse and Ethereum are each buzz words in their own right. You might be surprised to find out that the two are more connected than it seems. Many decentralized applications (DApps) on the Metaverse are coded on Ethereum’s network and accept Ether for transactions in the digital ecosystem. This article will touch on both concepts and delve into examples of this relationship within the Metaverse. If you’re not yet familiar with either Metaverse or Ethereum, don’t worry — we’ll provide you with links to quickly get up to speed.">Metaverse and Ethereum are each buzz words in their own right. You might be surprised to find out that the two are more connected than it seems. Many decentralized applications (DApps) on the Metaverse are coded on Ethereum’s network and accept Ether for transactions in the digital ecosystem. This article will touch on both concepts and delve into examples of this relationship within the Metaverse. If you’re not yet familiar with either Metaverse or Ethereum, don’t worry — we’ll provide you with links to quickly get up to speed.</li>
+                            </ul>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="card2" style="min-width: 18rem">
+                      <div class="card-header">
+                        Sri Lanka constitutes expert panel, imposes tax on rich
+                      </div>
+                      <div class="card-body">
+                        <p class="card-text">
+                          <ul class="list-group list-group-flush">
+                            <li class="newscard list-group-item" title="COLOMBO : Sri Lankan president Gotabaya Rajapaksa has constituted an expert panel to bail his country out of an unprecedented economic crisis characterised by shortage of essential commodities and widespread protests. The panel of eminent economists has been mandated to address the $8. 6 billion of debt and the soaring inflation by engaging with IMF and other probable lenders.">COLOMBO : Sri Lankan president Gotabaya Rajapaksa has constituted an expert panel to bail his country out of an unprecedented economic crisis characterised by shortage of essential commodities and widespread protests. The panel of eminent economists has been mandated to address the $8. 6 billion of debt and the soaring inflation by engaging with IMF and other probable lenders.</li>
+                        </ul>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="card2" style="min-width: 18rem">
+                      <div class="card-header">
+                        Ukraine Forces Control Sumy Region Bordering Russia
+                      </div>
+                      <div class="card-body">
+                        <p class="card-text">
+                          <ul class="list-group list-group-flush">
+                            <li class="newscard list-group-item" title="Kyiv: Ukrainian forces are in control of the entire northeast region of Sumy along the border with Russia, its governor said Friday, warning residents against returning while it was being cleared of mines.">Kyiv: Ukrainian forces are in control of the entire northeast region of Sumy along the border with Russia, its governor said Friday, warning residents against returning while it was being cleared of mines.</li>
+                        </ul>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="card2" style="min-width: 18rem">
+                      <div class="card-header">
+                        IPL 2022, Will Gujarat Titans Tinker With Winning Combination
+                      </div>
+                      <div class="card-body">
+                        <p class="card-text">
+                          <ul class="list-group list-group-flush">
+                            <li class="newscard list-group-item" title="Gujarat Titans (GT) have enjoyed a strong start to their debut season in the Indian Premier League (IPL), winning both of their games so far. The Hardik Pandya-led side has managed to get their combinations right in both, batting and bowling department. Shubman Gill has stepped up with the bat at the top of the order, while skipper Hardik, spinner Rashid Khan, and star pacer Mohammed Shami have ticked all the boxes so far.">Gujarat Titans (GT) have enjoyed a strong start to their debut season in the Indian Premier League (IPL), winning both of their games so far. The Hardik Pandya-led side has managed to get their combinations right in both, batting and bowling department. Shubman Gill has stepped up with the bat at the top of the order, while skipper Hardik, spinner Rashid Khan, and star pacer Mohammed Shami have ticked all the boxes so far.</li>
+                        </ul>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="d-flex justify-content-between flex-wrap">
+                    <div class="card" style="width: 22%;">
+                      <div class="card-header">
+                        Emergency Numbers
+                      </div>
+                      <div class="card-body">
+                        <p class="card-text">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Ambulance: 14430</li>
+                                <li class="list-group-item">Police: 112</li>
+                            </ul>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="card" style="width: 22%;">
+                      <div class="card-header">
+                        Daily Help
+                      </div>
+                      <div class="card-body">
+                        <p class="card-text">You can contact society manager if you require any service.</p>
+                      </div>
+                    </div>
+                    <div class="card" style="width: 22%;">
+                      <div class="card-header">
+                        Documents
+                      </div>
+                      <div class="card-body">
+                        <p class="card-text">Here are guidelines for our society..........<br><a href="{% url 'society_guidelines' %}">Show more</a></p>
+                      </div>
+                    </div>
+                    <div class="card" style="width: 22%;">
+                      <div class="card-header">
+                        Communication
+                      </div>
+                      <div class="card-body">
+                        <p class="card-text">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Society Manager: 9123145</li>
+                                <li class="list-group-item">Society Guard: 1129903</li>
+                            </ul>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div style = 'margin-top: 2rem'>
+                    <div class="card">
+                      <div class="card-header">
+                        Resident List
+                      </div>
+                      <ul class="residentlist list-group list-group-flush">
+                          {% for i in resident_list %}
+                            <li class="list-group-item">{{ i.username }}, flat no. {{ i.flat_no }}, tower no. {{ i.tower_no }}</li>
+                          {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+              </div>
+
+              <!-- right side  -->
+              <div class='rightSide'>
+                {% if user.is_authenticated %}
+                <h1>Visitiors List</h1>
+          
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">Visitior one</li>
+                      <li class="list-group-item">Visitior two</li>
+                      <li class="list-group-item">Visitior three</li>
+                      <li class="list-group-item">Visitior four</li>
+                      <li class="list-group-item"><button type="button" class="btn btn-primary">View Detail</button></li>
+                    </ul>
+                {% else %}
+                <h1>Flat's Available</h1>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">1bhk Flat</li>
+                  <li class="list-group-item">2bhk Flat</li>
+                  <li class="list-group-item">3bhk Flat</li>
+                  <li class="list-group-item"><button type="button" class="btn btn-primary">Buy Now</button></li>
+                  <li class="list-group-item"><button type="button" class="btn btn-primary">Rent Now</button></li>
+                </ul>
+                {% endif %}
+              </div>
+              <!-- end of right side -->
+            </div>
+
+            <!-- complains and suggestions -->
+
+            <div class="suggestions">
+              
+              <h3>Complains / Suggestions</h3>
+              <form class="suggestionsForm">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Name</label>
+                  <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter Name">
+                  <label for="exampleFormControlInput1">Email</label>
+                  <input type="email" class="form-control" id="exampleFormControlInput2" placeholder="Enter Email">
+                  <label for="exampleFormControlInput1">Message</label>
+                  <textarea type="text" class="form-control" id="exampleFormControlInput3" placeholder="Enter Complains / Suggestions"></textarea>
+                </div>
+                <button type="button" class="btn btn-primary">Send</button>
+              </form>
+            </div>
+
+            <!-- fooeter -->
+            <div class="footer-clean">
+              <footer>
+                  <div class="container">
+                      <div class="row justify-content-center">
+                          <div class="col-sm-4 col-md-3 item">
+                              <h3>Services</h3>
+                              <ul>
+                                  <li><a href="#">Web design</a></li>
+                                  <li><a href="#">Development</a></li>
+                                  <li><a href="#">Hosting</a></li>
+                              </ul>
+                          </div>
+                          <div class="col-sm-4 col-md-3 item">
+                              <h3>About</h3>
+                              <ul>
+                                  <li><a href="#">Company</a></li>
+                                  <li><a href="#">Team</a></li>
+                                  <li><a href="#">Legacy</a></li>
+                              </ul>
+                          </div>
+                          <div class="col-sm-4 col-md-3 item">
+                              <h3>Careers</h3>
+                              <ul>
+                                  <li><a href="#">Job openings</a></li>
+                                  <li><a href="#">Employee success</a></li>
+                                  <li><a href="#">Benefits</a></li>
+                              </ul>
+                          </div>
+                          <div class="col-lg-3 item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-instagram"></i></a>
+                              <p class="copyright">Company Name © 2018</p>
+                          </div>
+                      </div>
+                  </div>
+              </footer>
+          </div>
+
+          <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        </body>
+</html>

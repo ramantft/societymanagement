@@ -1,3 +1,12 @@
+{% load static %}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'users/home.css' %}">
+
+<div class="registerform">
+    <h2>User Registration</h2>
 {% if otp_message %}
     <form method="POST">
         {% csrf_token %}
@@ -21,57 +30,58 @@
 {% else %}
     <form class="login-form" method="POST">
         {% csrf_token %}
-        <label>Your Email: </label>
+        <label class="py-2">Your Email: </label>
         {{form.email}}
         {% if form.email.errors %}
         {% for error in form.email.errors %}
         <strong>{{ error|escape }}</strong>
         {% endfor %}
         {% endif %}
-            <label>Your Username: </label>
+            <label class="py-2">Your Username: </label>
             {{form.username}}
             {% if form.username.errors %}
             {% for error in form.username.errors %}
             <strong>{{ error|escape }}</strong>
             {% endfor %}
             {% endif %}
-        <label>Flat Number: </label>
+        <label class="py-2">Flat Number: </label>
         {{form.flat_no}}
         {% if form.flat_no.errors %}
         {% for error in form.flat_no.errors %}
         <strong>{{ error|escape }}</strong>
         {% endfor %}
         {% endif %}
-            <label>Tower Number: </span></label>
+            <label class="py-2">Tower Number: </span></label>
             {{form.tower_no}}
             {% if form.tower_no.errors %}
             {% for error in form.tower_no.errors %}
             <strong>{{ error|escape }}</strong>
             {% endfor %}
             {% endif %}
-            <label>Phone Number: </span></label>
+            <label class="py-2">Phone Number: </span></label>
             {{form.phone_no}}
             {% if form.phone_no.errors %}
             {% for error in form.phone_no.errors %}
             <strong>{{ error|escape }}</strong>
             {% endfor %}
             {% endif %}
-        <label>Password: </span></label>
+        <label class="py-2">Password: </span></label>
         {{form.password1}}
         {% if form.password1.errors %}
         {% for error in form.password1.errors %}
         <strong>{{ error|escape }}</strong>
         {% endfor %}
         {% endif %}
-        <label>Confirm Password: </span></label>
+        <label class="py-2">Confirm Password: </span></label>
         {{form.password2}}
         {% if form.password2.errors %}
         {% for error in form.password2.errors %}
         <strong>{{ error|escape }}</strong>
         {% endfor %}
         {% endif %}
-        <button class="btn btn-primary w-100" type="submit" >Register</button>
+        <br><button class="btn btn-primary w-100" type="submit" >Register</button>
         <p>Already have an account ? <a href="{% url 'login' %}">Sign in</a></p>
         <h2>{{ email_error }}</h2>
     </form>
 {% endif %}
+</div>

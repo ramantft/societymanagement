@@ -16,3 +16,4 @@ class Userprofile(models.Model):
     username = models.CharField(max_length=200, null=False)
     flat_no = models.CharField(max_length=200, null=False)
     tower_no = models.CharField(max_length=200, null=False)
+    phone_no = models.CharField(max_length=200, null=False)
