@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
+from .tasks import send_email_otp
 
 def register(request):
     if request.method == 'GET':
@@ -22,7 +23,8 @@ def register(request):
             if "resend" in request.POST.keys():
                 otp = randrange(1000, 9999)
                 print(otp)
-                send_mail('Email OTP login resend',"Your otp is: " + str(otp),'kakaney77768@gmail.com',[request.POST['usermail']],fail_silently=False,)
+                #send_mail('Email OTP login resend',"Your otp is: " + str(otp),'kakaney77768@gmail.com',[request.POST['usermail']],fail_silently=False,)
+                send_email_otp.delay(request.POST['usermail'], str(otp))
                 user_otp = Userotp(email=request.POST['usermail'],otp=str(otp))
                 user_otp.save()
                 return render(request, 'register.html', {'otp_message': 'Otp mail resended', 'email': request.POST['usermail']})
@@ -42,7 +44,8 @@ def register(request):
                 form.save()
                 otp = randrange(1000, 9999)
                 print(otp)
-                send_mail('Email OTP login',"Your otp is: " + str(otp),'kakaney77768@gmail.com',[form.cleaned_data.get('email')],fail_silently=False,)
+                #send_mail('Email OTP login',"Your otp is: " + str(otp),'kakaney77768@gmail.com',[form.cleaned_data.get('email')],fail_silently=False,)
+                send_email_otp.delay(form.cleaned_data.get('email'), str(otp))
                 user = form.cleaned_data.get('email')
                 user_otp = Userotp(email=form.cleaned_data.get('email'),otp=str(otp))
                 user_otp.save()
