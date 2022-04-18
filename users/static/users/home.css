@@ -157,3 +157,7 @@ h1{
     overflow: auto;
     max-height: 11.6em;
   }
+
+  .login {
+    margin-top: 5%;
+  }
