@@ -80,54 +80,20 @@
                   <h1>Home</h1>
                   <h2>Recent News: </h2>
                   <div class="d-flex justify-content-between news">
-                    <div class="card2" style="min-width: 18rem;">
-                      <div class="card-header">
-                        Metaverse And Ethereum: What’s The Connection?
-                      </div>
-                      <div class="card-body">
-                        <p class="card-text">
-                            <ul class="list-group list-group-flush">
-                                <li class="newscard list-group-item" title="Metaverse and Ethereum are each buzz words in their own right. You might be surprised to find out that the two are more connected than it seems. Many decentralized applications (DApps) on the Metaverse are coded on Ethereum’s network and accept Ether for transactions in the digital ecosystem. This article will touch on both concepts and delve into examples of this relationship within the Metaverse. If you’re not yet familiar with either Metaverse or Ethereum, don’t worry — we’ll provide you with links to quickly get up to speed.">Metaverse and Ethereum are each buzz words in their own right. You might be surprised to find out that the two are more connected than it seems. Many decentralized applications (DApps) on the Metaverse are coded on Ethereum’s network and accept Ether for transactions in the digital ecosystem. This article will touch on both concepts and delve into examples of this relationship within the Metaverse. If you’re not yet familiar with either Metaverse or Ethereum, don’t worry — we’ll provide you with links to quickly get up to speed.</li>
-                            </ul>
-                        </p>
-                      </div>
-                    </div>
+                    {% for news in news_list %}
                     <div class="card2" style="min-width: 18rem">
                       <div class="card-header">
-                        Sri Lanka constitutes expert panel, imposes tax on rich
+                        {{ news.title }}
                       </div>
                       <div class="card-body">
                         <p class="card-text">
                           <ul class="list-group list-group-flush">
-                            <li class="newscard list-group-item" title="COLOMBO : Sri Lankan president Gotabaya Rajapaksa has constituted an expert panel to bail his country out of an unprecedented economic crisis characterised by shortage of essential commodities and widespread protests. The panel of eminent economists has been mandated to address the $8. 6 billion of debt and the soaring inflation by engaging with IMF and other probable lenders.">COLOMBO : Sri Lankan president Gotabaya Rajapaksa has constituted an expert panel to bail his country out of an unprecedented economic crisis characterised by shortage of essential commodities and widespread protests. The panel of eminent economists has been mandated to address the $8. 6 billion of debt and the soaring inflation by engaging with IMF and other probable lenders.</li>
-                        </ul>
+                            <li class="newscard list-group-item" title='{{ news.content }}'>{{ news.content }}</li>
+                          </ul>
                         </p>
                       </div>
                     </div>
-                    <div class="card2" style="min-width: 18rem">
-                      <div class="card-header">
-                        Ukraine Forces Control Sumy Region Bordering Russia
-                      </div>
-                      <div class="card-body">
-                        <p class="card-text">
-                          <ul class="list-group list-group-flush">
-                            <li class="newscard list-group-item" title="Kyiv: Ukrainian forces are in control of the entire northeast region of Sumy along the border with Russia, its governor said Friday, warning residents against returning while it was being cleared of mines.">Kyiv: Ukrainian forces are in control of the entire northeast region of Sumy along the border with Russia, its governor said Friday, warning residents against returning while it was being cleared of mines.</li>
-                        </ul>
-                        </p>
-                      </div>
-                    </div>
-                    <div class="card2" style="min-width: 18rem">
-                      <div class="card-header">
-                        IPL 2022, Will Gujarat Titans Tinker With Winning Combination
-                      </div>
-                      <div class="card-body">
-                        <p class="card-text">
-                          <ul class="list-group list-group-flush">
-                            <li class="newscard list-group-item" title="Gujarat Titans (GT) have enjoyed a strong start to their debut season in the Indian Premier League (IPL), winning both of their games so far. The Hardik Pandya-led side has managed to get their combinations right in both, batting and bowling department. Shubman Gill has stepped up with the bat at the top of the order, while skipper Hardik, spinner Rashid Khan, and star pacer Mohammed Shami have ticked all the boxes so far.">Gujarat Titans (GT) have enjoyed a strong start to their debut season in the Indian Premier League (IPL), winning both of their games so far. The Hardik Pandya-led side has managed to get their combinations right in both, batting and bowling department. Shubman Gill has stepped up with the bat at the top of the order, while skipper Hardik, spinner Rashid Khan, and star pacer Mohammed Shami have ticked all the boxes so far.</li>
-                        </ul>
-                        </p>
-                      </div>
-                    </div>
+                    {% endfor %}
                   </div>
 
                   <div class="d-flex justify-content-between flex-wrap">
@@ -217,18 +183,18 @@
             <!-- complains and suggestions -->
 
             <div class="suggestions">
-              
               <h3>Complains / Suggestions</h3>
-              <form class="suggestionsForm">
+              <form class="suggestionsForm" id="myForm" method="POST" action="{% url 'home_page' %}">
+                {% csrf_token %}
                 <div class="form-group">
                   <label for="exampleFormControlInput1">Name</label>
-                  <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter Name">
-                  <label for="exampleFormControlInput1">Email</label>
-                  <input type="email" class="form-control" id="exampleFormControlInput2" placeholder="Enter Email">
+                  <input name="name" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter Name">
+                  <label for="exampleFormControlInput1" >Email</label>
+                  <input name="email" type="email" class="form-control" id="exampleFormControlInput2" placeholder="Enter Email">
                   <label for="exampleFormControlInput1">Message</label>
-                  <textarea type="text" class="form-control" id="exampleFormControlInput3" placeholder="Enter Complains / Suggestions"></textarea>
+                  <textarea name="suggestion_message" type="text" class="form-control" id="exampleFormControlInput3" placeholder="Enter Complains / Suggestions"></textarea>
                 </div>
-                <button type="button" class="btn btn-primary">Send</button>
+                <button type="submit" class="btn btn-primary">Send</button>
               </form>
             </div>
 
@@ -269,8 +235,8 @@
               </footer>
           </div>
 
-          <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        </body>
+</body>
 </html>

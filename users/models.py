@@ -1,4 +1,3 @@
-from enum import unique
 from django.db import models
 
 
@@ -17,3 +16,16 @@ class Userprofile(models.Model):
     flat_no = models.CharField(max_length=200, null=False)
     tower_no = models.CharField(max_length=200, null=False)
     phone_no = models.CharField(max_length=200, null=False)
+
+class News(models.Model):
+    def __str__(self):
+        return self.title
+
+    title = models.CharField(max_length=200, null=True)
+    content = models.CharField(max_length=1000, null=True)
+
+class Suggestions(models.Model):
+    def __str__(self):return self.suggestion
+    name = models.CharField(max_length=50, null=True)
+    email = models.CharField(max_length=50, null=False)
+    suggestion = models.CharField(max_length=200, null=True)

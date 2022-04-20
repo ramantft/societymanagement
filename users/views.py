@@ -1,9 +1,10 @@
+import email
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import RegisterForm
 from django.core.mail import send_mail
 from random import randrange
-from .models import Userotp, Userprofile
+from .models import Userotp, Userprofile, News, Suggestions
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordResetView
@@ -67,7 +68,14 @@ def register(request):
 
 def home_page(request):
     resident_list = Userprofile.objects.all()
-    return render(request, 'home_page.html', {"resident_list": resident_list})
+    news_list = News.objects.all()
+    if request.method == 'GET':
+        return render(request, 'home_page.html', {"resident_list": resident_list, "news_list": news_list})
+    elif request.method == 'POST':
+        if 'email' in request.POST and 'suggestion_message' in request.POST:
+            msg = Suggestions(name=request.POST['name'], email=request.POST['email'], suggestion=request.POST['suggestion_message'])
+            msg.save()
+        return redirect("home_page")
 
 class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     template_name = 'users/password_reset.html'
